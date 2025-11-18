@@ -41,24 +41,7 @@ pnpm-lock.yaml
 
 # Vim
 *.swp
-*.swo# Dependencies
-node_modules/
-npm-debug.log*
-
-# Environment
-.env
-.env.local
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
+*.swo
 *~
 
 # Emacs

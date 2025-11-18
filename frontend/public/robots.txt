@@ -1,0 +1,84 @@
+# EmplyStack - Robots.txt Configuration
+# https://www.robotstxt.org/robotstxt.html
+
+# Allow all search engines to crawl public pages
+User-agent: *
+Allow: /
+Allow: /login
+Allow: /register
+
+# Disallow crawling of authenticated/private areas
+Disallow: /dashboard
+Disallow: /employees
+Disallow: /attendance
+Disallow: /leaves
+Disallow: /payroll
+Disallow: /departments
+Disallow: /documents
+Disallow: /performance
+Disallow: /onboarding
+Disallow: /expenses
+Disallow: /announcements
+Disallow: /reports
+Disallow: /settings
+Disallow: /api/
+
+# Disallow crawling of admin sections
+Disallow: /admin/
+
+# Disallow user-specific data
+Disallow: /profile/
+Disallow: /notifications/
+
+# Block access to source maps and config files
+Disallow: /*.map$
+Disallow: /*.json$
+Disallow: /static/
+
+# Common bots - specific rules
+User-agent: Googlebot
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+
+User-agent: Slurp
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+
+# Social Media Crawlers (allow for preview cards)
+User-agent: Twitterbot
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+
+User-agent: facebookexternalhit
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+
+User-agent: LinkedInBot
+Allow: /
+Disallow: /dashboard
+Disallow: /api/
+
+# Block scrapers and bad bots
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+# Sitemap location (create this file later)
+Sitemap: https://emplystack.com/sitemap.xml

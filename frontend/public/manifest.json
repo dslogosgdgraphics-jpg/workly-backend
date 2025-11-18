@@ -1,0 +1,103 @@
+{
+  "short_name": "EmplyStack",
+  "name": "EmplyStack - Modern HR & Payroll Management",
+  "description": "Complete employee management, attendance tracking, payroll, and HR solution for modern businesses",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#4F46E5",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "categories": [
+    "business",
+    "productivity",
+    "finance"
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "platform": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your HR dashboard",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/icons/dashboard-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Check In",
+      "short_name": "Check In",
+      "description": "Quick attendance check-in",
+      "url": "/attendance",
+      "icons": [
+        {
+          "src": "/icons/checkin-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "short_name": "Employees",
+      "description": "Manage employees",
+      "url": "/employees",
+      "icons": [
+        {
+          "src": "/icons/employees-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Apply Leave",
+      "short_name": "Leave",
+      "description": "Apply for time off",
+      "url": "/leaves/apply",
+      "icons": [
+        {
+          "src": "/icons/leave-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "lang": "en-US",
+  "dir": "ltr"
+}

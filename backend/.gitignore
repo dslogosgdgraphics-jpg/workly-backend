@@ -1,29 +1,171 @@
-# Dependencies
+# ====================================
+# DEPENDENCIES
+# ====================================
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
-# Environment Variables
+# ====================================
+# ENVIRONMENT VARIABLES (CRITICAL!)
+# ====================================
 .env
 .env.local
+.env.development
 .env.production
+.env.test
+*.env
+!.env.example
 
-# IDE
+# ====================================
+# IDE / EDITORS
+# ====================================
+# VS Code
 .vscode/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# IntelliJ IDEA
 .idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
 *.swp
 *.swo
 *~
 
-# OS
-.DS_Store
-Thumbs.db
+# Emacs
+*~
+\#*\#
+.\#*
 
-# Logs
+# ====================================
+# OPERATING SYSTEM
+# ====================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ====================================
+# LOGS
+# ====================================
 logs/
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.npm
+.yarn-integrity
 
-# Build
+# ====================================
+# TESTING
+# ====================================
+coverage/
+*.lcov
+.nyc_output
+.grunt
+.lock-wscript
+
+# ====================================
+# BUILD / DIST
+# ====================================
 dist/
 build/
+.next/
+out/
+.nuxt/
+.cache/
+
+# ====================================
+# UPLOADS (if using local storage)
+# ====================================
+uploads/
+public/uploads/
+temp/
+tmp/
+
+# ====================================
+# DATABASE (if using local DB)
+# ====================================
+*.sqlite
+*.sqlite3
+*.db
+data/
+mongo-data/
+
+# ====================================
+# MISC
+# ====================================
+.env.backup
+.env.old
+*.pem
+*.key
+*.cert
+*.crt
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Directory for instrumented libs
+lib-cov
+
+# ====================================
+# DEPLOYMENT
+# ====================================
+.vercel
+.netlify
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
+.vscode-test
+
+# ====================================
+# TYPESCRIPT
+# ====================================
+*.tsbuildinfo
+
+# ====================================
+# OPTIONAL: npm
+# ====================================
+.npm
+.eslintcache
+.node_repl_history
+.yarn-integrity
+
+# ====================================
+# IGNORE SPECIFIC FILES
+# ====================================
+# Add any project-specific files here

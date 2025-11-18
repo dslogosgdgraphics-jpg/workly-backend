@@ -60,21 +60,6 @@ router.post('/', protect, authorize('admin'), checkSubscription, [
     validate
 ], async (req, res) => {
     try {
-        // EMPLOYEE LIMIT CHECK - Comment out these lines for unlimited employees
-        /*
-        const employeeCount = await User.countDocuments({ 
-            company: req.user.company,
-            role: 'employee'
-        });
-        
-        if (employeeCount >= req.company.maxEmployees) {
-            return res.status(403).json({
-                success: false,
-                message: `Employee limit reached (${req.company.maxEmployees}). Please upgrade your plan.`
-            });
-        }
-        */
-        
         const existingUser = await User.findOne({
             email: req.body.email.toLowerCase(),
             company: req.user.company

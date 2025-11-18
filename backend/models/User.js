@@ -30,6 +30,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    // NEW FIELD
+    department: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Department',
+        default: null
+    },
     designation: {
         type: String,
         required: [true, 'Designation is required'],
@@ -49,6 +55,29 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    // NEW FIELDS
+    birthDate: {
+        type: Date,
+        default: null
+    },
+    address: {
+        street: String,
+        city: String,
+        state: String,
+        country: String,
+        zipCode: String
+    },
+    emergencyContact: {
+        name: String,
+        relationship: String,
+        phone: String
+    },
+    bankDetails: {
+        accountNumber: String,
+        bankName: String,
+        ifscCode: String,
+        accountHolderName: String
+    },
     status: {
         type: String,
         enum: ['active', 'inactive', 'suspended'],
@@ -57,7 +86,24 @@ const userSchema = new mongoose.Schema({
     profilePhoto: {
         type: String,
         default: null
-    }
+    },
+    // NEW FIELDS
+    skills: [{
+        type: String,
+        trim: true
+    }],
+    education: [{
+        degree: String,
+        institution: String,
+        year: Number
+    }],
+    employmentHistory: [{
+        company: String,
+        position: String,
+        startDate: Date,
+        endDate: Date,
+        description: String
+    }]
 }, {
     timestamps: true
 });

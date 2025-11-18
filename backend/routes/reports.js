@@ -41,6 +41,7 @@ router.get('/dashboard', protect, checkSubscription, async (req, res) => {
             stats = {
                 totalEmployees,
                 presentToday: todayAttendance.length,
+                absentToday: totalEmployees - todayAttendance.length,
                 pendingLeaves,
                 monthlySalaryCost
             };
@@ -73,6 +74,8 @@ router.get('/dashboard', protect, checkSubscription, async (req, res) => {
             stats = {
                 monthlyAttendance,
                 todayStatus: todayStatus ? todayStatus.status : 'not-marked',
+                checkedIn: todayStatus ? !!todayStatus.checkInTime : false,
+                checkedOut: todayStatus ? !!todayStatus.checkOutTime : false,
                 pendingLeaves: myPendingLeaves,
                 salary: req.user.salary
             };
@@ -83,6 +86,7 @@ router.get('/dashboard', protect, checkSubscription, async (req, res) => {
             data: stats
         });
     } catch (error) {
+        console.error('Dashboard error:', error);
         res.status(500).json({
             success: false,
             message: 'Error fetching dashboard statistics'
@@ -197,6 +201,129 @@ router.get('/payroll', protect, authorize('admin'), checkSubscription, async (re
         res.status(500).json({
             success: false,
             message: 'Error generating payroll report'
+        });
+    }
+});
+
+router.get('/leaves', protect, authorize('admin'), checkSubscription, async (req, res) => {
+    try {
+        const { startDate, endDate, status } = req.query;
+        
+        let query = { company: req.user.company };
+        
+        if (startDate && endDate) {
+            query.startDate = { $lte: new Date(endDate) };
+            query.endDate = { $gte: new Date(startDate) };
+        }
+        
+        if (status) {
+            query.status = status;
+        }
+        
+        const leaves = await Leave.find(query)
+            .populate('employee', 'name designation email')
+            .sort({ startDate: -1 });
+        
+        const summary = {
+            total: leaves.length,
+            pending: leaves.filter(l => l.status === 'pending').length,
+            approved: leaves.filter(l => l.status === 'approved').length,
+            rejected: leaves.filter(l => l.status === 'rejected').length,
+            byType: {
+                sick: leaves.filter(l => l.type === 'sick').length,
+                casual: leaves.filter(l => l.type === 'casual').length,
+                annual: leaves.filter(l => l.type === 'annual').length,
+                unpaid: leaves.filter(l => l.type === 'unpaid').length
+            }
+        };
+        
+        res.json({
+            success: true,
+            data: {
+                records: leaves,
+                summary
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error generating leave report'
+        });
+    }
+});
+
+router.get('/employee-summary/:employeeId', protect, authorize('admin'), checkSubscription, async (req, res) => {
+    try {
+        const { employeeId } = req.params;
+        const { year } = req.query;
+        
+        const employee = await User.findOne({
+            _id: employeeId,
+            company: req.user.company
+        });
+        
+        if (!employee) {
+            return res.status(404).json({
+                success: false,
+                message: 'Employee not found'
+            });
+        }
+        
+        const currentYear = year || new Date().getFullYear();
+        const yearStart = new Date(currentYear, 0, 1);
+        const yearEnd = new Date(currentYear, 11, 31);
+        
+        const attendance = await Attendance.find({
+            company: req.user.company,
+            employee: employeeId,
+            date: { $gte: yearStart, $lte: yearEnd }
+        });
+        
+        const leaves = await Leave.find({
+            company: req.user.company,
+            employee: employeeId,
+            startDate: { $gte: yearStart, $lte: yearEnd }
+        });
+        
+        const payroll = await Payroll.find({
+            company: req.user.company,
+            employee: employeeId
+        }).sort({ month: -1 }).limit(12);
+        
+        const attendanceSummary = {
+            present: attendance.filter(a => a.status === 'present').length,
+            absent: attendance.filter(a => a.status === 'absent').length,
+            late: attendance.filter(a => a.status === 'late').length,
+            halfDay: attendance.filter(a => a.status === 'half-day').length
+        };
+        
+        const leaveSummary = {
+            total: leaves.length,
+            approved: leaves.filter(l => l.status === 'approved').length,
+            pending: leaves.filter(l => l.status === 'pending').length,
+            rejected: leaves.filter(l => l.status === 'rejected').length
+        };
+        
+        res.json({
+            success: true,
+            data: {
+                employee: {
+                    id: employee._id,
+                    name: employee.name,
+                    email: employee.email,
+                    designation: employee.designation,
+                    salary: employee.salary,
+                    joinDate: employee.joinDate
+                },
+                attendance: attendanceSummary,
+                leaves: leaveSummary,
+                payroll: payroll
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error generating employee summary'
         });
     }
 });

@@ -1,6 +1,6 @@
 import axios from './axios';
 
-// Get all leaves
+// Individual function exports (for LeaveApprovals.jsx style imports)
 export const getLeaves = async (params) => {
   try {
     const response = await axios.get('/leaves', { params });
@@ -11,7 +11,6 @@ export const getLeaves = async (params) => {
   }
 };
 
-// Get single leave
 export const getLeaveById = async (id) => {
   try {
     const response = await axios.get(`/leaves/${id}`);
@@ -22,7 +21,6 @@ export const getLeaveById = async (id) => {
   }
 };
 
-// Create/Apply for leave
 export const applyLeave = async (leaveData) => {
   try {
     const response = await axios.post('/leaves', leaveData);
@@ -33,7 +31,6 @@ export const applyLeave = async (leaveData) => {
   }
 };
 
-// Approve leave
 export const approveLeave = async (id, notes = '') => {
   try {
     const response = await axios.put(`/leaves/${id}/approve`, { notes });
@@ -44,7 +41,6 @@ export const approveLeave = async (id, notes = '') => {
   }
 };
 
-// Reject leave
 export const rejectLeave = async (id, notes = '') => {
   try {
     const response = await axios.put(`/leaves/${id}/reject`, { notes });
@@ -55,7 +51,6 @@ export const rejectLeave = async (id, notes = '') => {
   }
 };
 
-// Delete leave
 export const deleteLeave = async (id) => {
   try {
     const response = await axios.delete(`/leaves/${id}`);
@@ -66,8 +61,8 @@ export const deleteLeave = async (id) => {
   }
 };
 
-// Export as default object as well
-export default {
+// Named export as an object (for LeaveList.jsx style imports)
+export const leaveApi = {
   getLeaves,
   getLeaveById,
   applyLeave,
@@ -75,3 +70,6 @@ export default {
   rejectLeave,
   deleteLeave,
 };
+
+// Default export (for default import style)
+export default leaveApi;

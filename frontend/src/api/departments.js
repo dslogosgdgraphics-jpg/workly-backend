@@ -55,7 +55,7 @@ export const departmentsAPI = {
   getById: getDepartmentById,
   create: createDepartment,
   update: updateDepartment,
-  delete: deleteDepartment
+  deleteDepartment: deleteDepartment
 };
 
 export const departmentApi = departmentsAPI;

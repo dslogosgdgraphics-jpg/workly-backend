@@ -31,9 +31,9 @@ export const getPayrollReport = async (params) => {
 };
 
 export const reportsAPI = {
-  getDashboard,
-  getAttendanceReport,
-  getPayrollReport
+  getDashboard: getDashboard,
+  getAttendanceReport: getAttendanceReport,
+  getPayrollReport: getPayrollReport
 };
 
 export const reportApi = reportsAPI;

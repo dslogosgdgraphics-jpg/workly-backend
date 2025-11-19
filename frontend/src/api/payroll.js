@@ -66,7 +66,7 @@ export const payrollAPI = {
   generate: generatePayroll,
   update: updatePayroll,
   updateStatus: updatePayrollStatus,
-  delete: deletePayroll
+  deletePayroll: deletePayroll
 };
 
 export const payrollApi = payrollAPI;

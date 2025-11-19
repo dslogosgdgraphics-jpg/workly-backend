@@ -62,11 +62,11 @@ export const deleteAttendance = async (id) => {
 
 export const attendanceAPI = {
   getAll: getAttendance,
-  getTodayStatus,
-  checkIn,
-  checkOut,
-  markAttendance,
-  delete: deleteAttendance
+  getTodayStatus: getTodayStatus,
+  checkIn: checkIn,
+  checkOut: checkOut,
+  markAttendance: markAttendance,
+  deleteAttendance: deleteAttendance
 };
 
 export const attendanceApi = attendanceAPI;

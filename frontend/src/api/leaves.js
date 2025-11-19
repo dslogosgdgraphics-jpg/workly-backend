@@ -66,7 +66,7 @@ export const leavesAPI = {
   apply: applyLeave,
   approve: approveLeave,
   reject: rejectLeave,
-  delete: deleteLeave
+  deleteLeave: deleteLeave
 };
 
 export const leaveApi = leavesAPI;

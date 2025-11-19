@@ -55,7 +55,7 @@ export const employeesAPI = {
   getById: getEmployeeById,
   create: createEmployee,
   update: updateEmployee,
-  delete: deleteEmployee
+  deleteEmployee: deleteEmployee
 };
 
 export const employeeApi = employeesAPI;

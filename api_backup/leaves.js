@@ -1,6 +1,7 @@
-import axios from './axios';
+﻿import axios from './axios';
 
-// Individual function exportsexport const getLeaves = async (params) => {
+// Individual function exports
+export const getLeaves = async (params) => {
   try {
     const response = await axios.get('/leaves', { params });
     return response.data;
@@ -12,7 +13,7 @@ import axios from './axios';
 
 export const getLeaveById = async (id) => {
   try {
-    const response = await axios.get(`/leaves/${id}`);
+    const response = await axios.get(/leaves/);
     return response.data;
   } catch (error) {
     console.error('Error fetching leave:', error);
@@ -32,7 +33,7 @@ export const applyLeave = async (leaveData) => {
 
 export const approveLeave = async (id, notes = '') => {
   try {
-    const response = await axios.put(`/leaves/${id}/approve`, { notes });
+    const response = await axios.put(/leaves//approve, { notes });
     return response.data;
   } catch (error) {
     console.error('Error approving leave:', error);
@@ -42,7 +43,7 @@ export const approveLeave = async (id, notes = '') => {
 
 export const rejectLeave = async (id, notes = '') => {
   try {
-    const response = await axios.put(`/leaves/${id}/reject`, { notes });
+    const response = await axios.put(/leaves//reject, { notes });
     return response.data;
   } catch (error) {
     console.error('Error rejecting leave:', error);
@@ -52,7 +53,7 @@ export const rejectLeave = async (id, notes = '') => {
 
 export const deleteLeave = async (id) => {
   try {
-    const response = await axios.delete(`/leaves/${id}`);
+    const response = await axios.delete(/leaves/);
     return response.data;
   } catch (error) {
     console.error('Error deleting leave:', error);

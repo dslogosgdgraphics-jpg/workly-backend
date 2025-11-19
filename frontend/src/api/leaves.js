@@ -1,6 +1,5 @@
 ﻿import axios from './axios';
 
-// Individual function exports
 export const getLeaves = async (params) => {
   try {
     const response = await axios.get('/leaves', { params });
@@ -61,7 +60,6 @@ export const deleteLeave = async (id) => {
   }
 };
 
-// Object export (uppercase API)
 export const leavesAPI = {
   getAll: getLeaves,
   getById: getLeaveById,
@@ -71,9 +69,7 @@ export const leavesAPI = {
   delete: deleteLeave,
 };
 
-// Named export as an object (for LeaveList.jsx style imports)
 export const leaveApi = leavesAPI;
 export const leavesApi = leavesAPI;
 
-// Default export
 export default leaveApi;

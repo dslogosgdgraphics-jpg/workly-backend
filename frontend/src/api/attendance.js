@@ -52,7 +52,7 @@ export const markAttendance = async (attendanceData) => {
 
 export const deleteAttendance = async (id) => {
   try {
-    const response = await axios.delete(/attendance/+id);
+    const response = await axios.delete(`/attendance/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting attendance:', error);

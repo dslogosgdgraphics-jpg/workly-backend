@@ -12,7 +12,7 @@ export const getDepartments = async (params) => {
 
 export const getDepartmentById = async (id) => {
   try {
-    const response = await axios.get(/departments/+id);
+    const response = await axios.get(`/departments/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching department:', error);
@@ -32,7 +32,7 @@ export const createDepartment = async (departmentData) => {
 
 export const updateDepartment = async (id, departmentData) => {
   try {
-    const response = await axios.put(/departments/+id, departmentData);
+    const response = await axios.put(`/departments/${id}`, departmentData);
     return response.data;
   } catch (error) {
     console.error('Error updating department:', error);
@@ -42,7 +42,7 @@ export const updateDepartment = async (id, departmentData) => {
 
 export const deleteDepartment = async (id) => {
   try {
-    const response = await axios.delete(/departments/+id);
+    const response = await axios.delete(`/departments/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting department:', error);

@@ -12,7 +12,7 @@ export const getEmployees = async (params) => {
 
 export const getEmployeeById = async (id) => {
   try {
-    const response = await axios.get(/employees/+id);
+    const response = await axios.get(`/employees/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching employee:', error);
@@ -32,7 +32,7 @@ export const createEmployee = async (employeeData) => {
 
 export const updateEmployee = async (id, employeeData) => {
   try {
-    const response = await axios.put(/employees/+id, employeeData);
+    const response = await axios.put(`/employees/${id}`, employeeData);
     return response.data;
   } catch (error) {
     console.error('Error updating employee:', error);
@@ -42,7 +42,7 @@ export const updateEmployee = async (id, employeeData) => {
 
 export const deleteEmployee = async (id) => {
   try {
-    const response = await axios.delete(/employees/+id);
+    const response = await axios.delete(`/employees/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting employee:', error);

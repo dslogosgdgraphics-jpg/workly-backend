@@ -1,5 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Download, ZoomIn, ZoomOut, Grid, List, Users, ChevronDown, ChevronRight, Mail, Phone, Building2, Briefcase } from 'lucide-react';
+import { 
+  Search, 
+  Download, 
+  ZoomIn, 
+  ZoomOut, 
+  Grid, 
+  List, 
+  Users, 
+  ChevronDown, 
+  ChevronRight, 
+  Mail, 
+  Phone, 
+  Building2, 
+  Briefcase 
+} from 'lucide-react';
 import { employeesAPI } from '../../api/employees';
 import { departmentsAPI } from '../../api/departments';
 
@@ -9,36 +23,37 @@ const OrgChart = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [viewMode, setViewMode] = useState('tree'); // tree, list
+  const [viewMode, setViewMode] = useState('tree');
   const [zoom, setZoom] = useState(100);
   const [expandedDepts, setExpandedDepts] = useState({});
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = async () => {
     try {
       setLoading(true);
+      setError('');
       const [empRes, deptRes] = await Promise.all([
         employeesAPI.getAll(),
         departmentsAPI.getAll()
       ]);
 
       if (empRes.success && deptRes.success) {
-        setEmployees(empRes.data);
-        setDepartments(deptRes.data);
+        setEmployees(empRes.data || []);
+        setDepartments(deptRes.data || []);
         
-        // Auto-expand all departments by default
         const expanded = {};
-        deptRes.data.forEach(dept => {
+        (deptRes.data || []).forEach(dept => {
           expanded[dept._id] = true;
         });
         setExpandedDepts(expanded);
       }
     } catch (err) {
       setError('Failed to load organization chart');
-      console.error(err);
+      console.error('Fetch error:', err);
     } finally {
       setLoading(false);
     }
@@ -60,7 +75,6 @@ const OrgChart = () => {
   };
 
   const handleExport = () => {
-    // Simple CSV export
     const csvData = employees.map(emp => ({
       Name: emp.name,
       Email: emp.email,
@@ -70,7 +84,7 @@ const OrgChart = () => {
     }));
 
     const csv = [
-      Object.keys(csvData[0]).join(','),
+      Object.keys(csvData[0] || {}).join(','),
       ...csvData.map(row => Object.values(row).join(','))
     ].join('\n');
 
@@ -78,8 +92,9 @@ const OrgChart = () => {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'org-chart.csv';
+    a.download = `org-chart-${new Date().toISOString().split('T')[0]}.csv`;
     a.click();
+    window.URL.revokeObjectURL(url);
   };
 
   const getEmployeesByDepartment = (deptId) => {
@@ -92,7 +107,6 @@ const OrgChart = () => {
 
   const getManagersInDepartment = (deptId) => {
     const deptEmployees = getEmployeesByDepartment(deptId);
-    // Find employees who are managers (have direct reports)
     return deptEmployees.filter(emp => 
       deptEmployees.some(e => e.manager === emp._id || e.manager?._id === emp._id)
     );
@@ -105,15 +119,15 @@ const OrgChart = () => {
   };
 
   const filteredEmployees = employees.filter(emp =>
-    emp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    emp.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    emp.designation.toLowerCase().includes(searchTerm.toLowerCase())
+    emp.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    emp.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    emp.designation?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredDepartments = departments.filter(dept =>
-    dept.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    dept.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     getEmployeesByDepartment(dept._id).some(emp =>
-      emp.name.toLowerCase().includes(searchTerm.toLowerCase())
+      emp.name?.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
 
@@ -125,15 +139,12 @@ const OrgChart = () => {
     return (
       <div className="relative" style={{ marginLeft: level > 0 ? '40px' : '0' }}>
         <div className="group relative">
-          {/* Connecting Line */}
           {level > 0 && (
             <div className="absolute left-[-20px] top-1/2 w-5 h-0.5 bg-gradient-to-r from-indigo-200 to-indigo-400"></div>
           )}
 
-          {/* Employee Card */}
           <div className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 p-4 mb-4 border-l-4 border-indigo-500 hover:border-purple-500 transform hover:-translate-y-1">
             <div className="flex items-start gap-4">
-              {/* Avatar */}
               <div className="relative">
                 {employee.profilePhoto ? (
                   <img
@@ -144,7 +155,7 @@ const OrgChart = () => {
                 ) : (
                   <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center ring-4 ring-indigo-100">
                     <span className="text-white text-xl font-bold">
-                      {employee.name.charAt(0)}
+                      {employee.name?.charAt(0) || 'E'}
                     </span>
                   </div>
                 )}
@@ -153,7 +164,6 @@ const OrgChart = () => {
                 )}
               </div>
 
-              {/* Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between">
                   <div>
@@ -195,6 +205,7 @@ const OrgChart = () => {
                   <button
                     onClick={() => setShowReports(!showReports)}
                     className="mt-3 flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
+                    aria-label={`Toggle ${directReports.length} direct reports`}
                   >
                     {showReports ? (
                       <ChevronDown className="w-4 h-4" />
@@ -210,7 +221,6 @@ const OrgChart = () => {
           </div>
         </div>
 
-        {/* Direct Reports */}
         {directReports.length > 0 && showReports && (
           <div className="ml-4 border-l-2 border-indigo-200 pl-2">
             {directReports.map(report => (
@@ -232,7 +242,6 @@ const OrgChart = () => {
     const managers = getManagersInDepartment(department._id);
     const isExpanded = expandedDepts[department._id];
 
-    // Get top-level employees (managers or those without managers in this dept)
     const topLevelEmployees = deptEmployees.filter(emp => {
       const hasManagerInDept = emp.manager && deptEmployees.some(e => 
         e._id === emp.manager || e._id === emp.manager?._id
@@ -241,11 +250,14 @@ const OrgChart = () => {
     });
 
     return (
-      <div className="mb-8">
-        {/* Department Header */}
+      <div className="mb-8" key={department._id}>
         <div
           onClick={() => toggleDepartment(department._id)}
           className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl shadow-lg p-6 cursor-pointer hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]"
+          role="button"
+          tabIndex={0}
+          onKeyPress={(e) => e.key === 'Enter' && toggleDepartment(department._id)}
+          aria-expanded={isExpanded}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -285,7 +297,6 @@ const OrgChart = () => {
           </div>
         </div>
 
-        {/* Department Employees */}
         {isExpanded && (
           <div className="mt-6 pl-4">
             {topLevelEmployees.length > 0 ? (
@@ -323,7 +334,7 @@ const OrgChart = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {filteredEmployees.map((emp, idx) => (
+            {filteredEmployees.map((emp) => (
               <tr key={emp._id} className="hover:bg-indigo-50 transition-colors">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
@@ -336,7 +347,7 @@ const OrgChart = () => {
                     ) : (
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
                         <span className="text-white font-semibold">
-                          {emp.name.charAt(0)}
+                          {emp.name?.charAt(0) || 'E'}
                         </span>
                       </div>
                     )}
@@ -379,7 +390,6 @@ const OrgChart = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-6">
-      {/* Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
           Organization Chart
@@ -387,10 +397,8 @@ const OrgChart = () => {
         <p className="text-gray-600">Visualize your company structure and team hierarchy</p>
       </div>
 
-      {/* Toolbar */}
       <div className="bg-white rounded-xl shadow-lg p-4 mb-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
-          {/* Search */}
           <div className="relative flex-1 min-w-[300px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
@@ -402,9 +410,7 @@ const OrgChart = () => {
             />
           </div>
 
-          {/* Controls */}
           <div className="flex items-center gap-3">
-            {/* View Toggle */}
             <div className="flex bg-gray-100 rounded-lg p-1">
               <button
                 onClick={() => setViewMode('tree')}
@@ -430,13 +436,13 @@ const OrgChart = () => {
               </button>
             </div>
 
-            {/* Zoom Controls (Tree view only) */}
             {viewMode === 'tree' && (
               <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1">
                 <button
                   onClick={handleZoomOut}
                   className="p-2 hover:bg-white rounded-md transition-colors"
                   title="Zoom Out"
+                  aria-label="Zoom out"
                 >
                   <ZoomOut className="w-5 h-5 text-gray-600" />
                 </button>
@@ -447,13 +453,13 @@ const OrgChart = () => {
                   onClick={handleZoomIn}
                   className="p-2 hover:bg-white rounded-md transition-colors"
                   title="Zoom In"
+                  aria-label="Zoom in"
                 >
                   <ZoomIn className="w-5 h-5 text-gray-600" />
                 </button>
               </div>
             )}
 
-            {/* Export */}
             <button
               onClick={handleExport}
               className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all"
@@ -465,14 +471,12 @@ const OrgChart = () => {
         </div>
       </div>
 
-      {/* Error Message */}
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
           <p className="text-red-800">{error}</p>
         </div>
       )}
 
-      {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
           <div className="flex items-center justify-between">
@@ -523,16 +527,13 @@ const OrgChart = () => {
         </div>
       </div>
 
-      {/* Content */}
       <div style={{ transform: `scale(${zoom / 100})`, transformOrigin: 'top left' }}>
         {viewMode === 'tree' ? (
           <div className="space-y-8">
-            {/* Departments */}
             {filteredDepartments.map(dept => (
               <DepartmentSection key={dept._id} department={dept} />
             ))}
 
-            {/* Unassigned Employees */}
             {getUnassignedEmployees().length > 0 && (
               <div className="mb-8">
                 <div className="bg-gradient-to-r from-gray-500 to-gray-600 rounded-xl shadow-lg p-6 mb-6">

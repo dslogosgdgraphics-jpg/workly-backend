@@ -61,7 +61,7 @@ export const deleteAttendance = async (id) => {
   }
 };
 
-// Object export for alternative import style
+// Object export (uppercase API)
 export const attendanceAPI = {
   getAll: getAttendance,
   getTodayStatus,
@@ -70,6 +70,9 @@ export const attendanceAPI = {
   markAttendance,
   delete: deleteAttendance,
 };
+
+// Alias for lowercase "Api" (for Dashboard.jsx compatibility)
+export const attendanceApi = attendanceAPI;
 
 // Default export
 export default attendanceAPI;

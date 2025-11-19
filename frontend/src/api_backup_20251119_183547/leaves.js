@@ -1,6 +1,6 @@
-﻿import axios from './axios';
+import axios from './axios';
 
-export const getLeaves = async (params) => {
+// Individual function exportsexport const getLeaves = async (params) => {
   try {
     const response = await axios.get('/leaves', { params });
     return response.data;
@@ -12,7 +12,7 @@ export const getLeaves = async (params) => {
 
 export const getLeaveById = async (id) => {
   try {
-    const response = await axios.get(/leaves/+id);
+    const response = await axios.get(`/leaves/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching leave:', error);
@@ -30,9 +30,9 @@ export const applyLeave = async (leaveData) => {
   }
 };
 
-export const approveLeave = async (id, notes) => {
+export const approveLeave = async (id, notes = '') => {
   try {
-    const response = await axios.put(/leaves/+id+/approve, { notes });
+    const response = await axios.put(`/leaves/${id}/approve`, { notes });
     return response.data;
   } catch (error) {
     console.error('Error approving leave:', error);
@@ -40,9 +40,9 @@ export const approveLeave = async (id, notes) => {
   }
 };
 
-export const rejectLeave = async (id, notes) => {
+export const rejectLeave = async (id, notes = '') => {
   try {
-    const response = await axios.put(/leaves/+id+/reject, { notes });
+    const response = await axios.put(`/leaves/${id}/reject`, { notes });
     return response.data;
   } catch (error) {
     console.error('Error rejecting leave:', error);
@@ -52,7 +52,7 @@ export const rejectLeave = async (id, notes) => {
 
 export const deleteLeave = async (id) => {
   try {
-    const response = await axios.delete(/leaves/+id);
+    const response = await axios.delete(`/leaves/${id}`);
     return response.data;
   } catch (error) {
     console.error('Error deleting leave:', error);
@@ -60,16 +60,19 @@ export const deleteLeave = async (id) => {
   }
 };
 
+// Object export (uppercase API)
 export const leavesAPI = {
   getAll: getLeaves,
   getById: getLeaveById,
   apply: applyLeave,
   approve: approveLeave,
   reject: rejectLeave,
-  delete: deleteLeave
+  delete: deleteLeave,
 };
 
+// Named export as an object (for LeaveList.jsx style imports)
 export const leaveApi = leavesAPI;
 export const leavesApi = leavesAPI;
 
+// Default export
 export default leaveApi;

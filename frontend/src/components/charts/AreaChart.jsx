@@ -50,4 +50,8 @@ const AreaChart = ({ data, xKey, areas, height = 300 }) => {
   );
 };
 
+<<<<<<< HEAD
 export default AreaChart;
+=======
+export default AreaChart;
+>>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade

@@ -61,7 +61,11 @@ export const deletePayroll = async (id) => {
   }
 };
 
+<<<<<<< HEAD
 // Object export (uppercase API)
+=======
+// Object export for alternative import style
+>>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade
 export const payrollAPI = {
   getAll: getPayroll,
   getById: getPayrollById,
@@ -71,8 +75,13 @@ export const payrollAPI = {
   delete: deletePayroll,
 };
 
+<<<<<<< HEAD
 // Alias for lowercase "Api"
 export const payrollApi = payrollAPI;
 
 // Default export
 export default payrollAPI;
+=======
+// Default export
+export default payrollAPI;
+>>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade

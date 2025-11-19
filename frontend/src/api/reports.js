@@ -51,6 +51,7 @@ export const getEmployeeReport = async (params) => {
   }
 };
 
+<<<<<<< HEAD
 export const exportReport = async (type, params) => {
   try {
     const response = await axios.get(`/reports/export/${type}`, { 
@@ -64,6 +65,8 @@ export const exportReport = async (type, params) => {
   }
 };
 
+=======
+>>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade
 // Object export (uppercase API)
 export const reportsAPI = {
   getDashboard,
@@ -71,12 +74,21 @@ export const reportsAPI = {
   getPayrollReport,
   getLeaveReport,
   getEmployeeReport,
+<<<<<<< HEAD
   exportReport,
+=======
+>>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade
 };
 
 // Alias for lowercase "Api" (for Dashboard.jsx compatibility)
 export const reportApi = reportsAPI;
+<<<<<<< HEAD
 export const reportsApi = reportsAPI;
 
 // Default export
 export default reportsAPI;
+=======
+
+// Default export
+export default reportsAPI;
+>>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade

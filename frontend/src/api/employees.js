@@ -51,7 +51,11 @@ export const deleteEmployee = async (id) => {
   }
 };
 
+<<<<<<< HEAD
 // Object export (uppercase API)
+=======
+// Object export for alternative import style
+>>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade
 export const employeesAPI = {
   getAll: getEmployees,
   getById: getEmployeeById,
@@ -60,9 +64,14 @@ export const employeesAPI = {
   delete: deleteEmployee,
 };
 
+<<<<<<< HEAD
 // Aliases for lowercase "Api"
 export const employeeApi = employeesAPI;
 export const employeesApi = employeesAPI;
 
 // Default export
 export default employeesAPI;
+=======
+// Default export
+export default employeesAPI;
+>>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade

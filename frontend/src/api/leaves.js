@@ -1,6 +1,10 @@
 import axios from './axios';
 
+<<<<<<< HEAD
 // Individual function exports
+=======
+// Individual function exports (for LeaveApprovals.jsx style imports)
+>>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade
 export const getLeaves = async (params) => {
   try {
     const response = await axios.get('/leaves', { params });
@@ -61,6 +65,7 @@ export const deleteLeave = async (id) => {
   }
 };
 
+<<<<<<< HEAD
 // Object export (uppercase API)
 export const leavesAPI = {
   getAll: getLeaves,
@@ -77,3 +82,17 @@ export const leavesApi = leavesAPI;
 
 // Default export
 export default leaveApi;
+=======
+// Named export as an object (for LeaveList.jsx style imports)
+export const leaveApi = {
+  getLeaves,
+  getLeaveById,
+  applyLeave,
+  approveLeave,
+  rejectLeave,
+  deleteLeave,
+};
+
+// Default export (for default import style)
+export default leaveApi;
+>>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade

@@ -75,8 +75,4 @@ export const attendanceAPI = {
 export const attendanceApi = attendanceAPI;
 
 // Default export
-<<<<<<< HEAD
 export default attendanceAPI;
-=======
-export default attendanceAPI;
->>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade

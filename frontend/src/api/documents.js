@@ -1,13 +1,57 @@
-import api from './axios';
+import axios from './axios';
 
-export const documentApi = {
-  getAll: (params) => api.get('/documents', { params }),
-  
-  upload: (formData) => api.post('/documents/upload', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
-  
-  delete: (id) => api.delete(`/documents/${id}`),
-  
-  acknowledge: (id, signature) => api.post(`/documents/${id}/acknowledge`, { signature }),
+export const getDocuments = async (params) => {
+  try {
+    const response = await axios.get('/documents', { params });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching documents:', error);
+    throw error;
+  }
 };
+
+export const getDocumentById = async (id) => {
+  try {
+    const response = await axios.get(`/documents/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching document:', error);
+    throw error;
+  }
+};
+
+export const uploadDocument = async (formData) => {
+  try {
+    const response = await axios.post('/documents', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error uploading document:', error);
+    throw error;
+  }
+};
+
+export const deleteDocument = async (id) => {
+  try {
+    const response = await axios.delete(`/documents/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting document:', error);
+    throw error;
+  }
+};
+
+export const documentsAPI = {
+  getAll: getDocuments,
+  getById: getDocumentById,
+  upload: uploadDocument,
+  delete: deleteDocument,
+};
+
+export const documentApi = documentsAPI;
+export const documentsApi = documentsAPI;
+
+export default documentsAPI;

@@ -1,15 +1,75 @@
-import api from './axios';
+import axios from './axios';
 
-export const attendanceApi = {
-  getAll: (params) => api.get('/attendance', { params }),
-  
-  checkIn: () => api.post('/attendance/checkin'),
-  
-  checkOut: () => api.post('/attendance/checkout'),
-  
-  getTodayStatus: () => api.get('/attendance/today/status'),
-  
-  markAttendance: (data) => api.post('/attendance', data),
-  
-  delete: (id) => api.delete(`/attendance/${id}`),
+// Individual function exports
+export const getAttendance = async (params) => {
+  try {
+    const response = await axios.get('/attendance', { params });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching attendance:', error);
+    throw error;
+  }
 };
+
+export const getTodayStatus = async () => {
+  try {
+    const response = await axios.get('/attendance/today/status');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching today status:', error);
+    throw error;
+  }
+};
+
+export const checkIn = async () => {
+  try {
+    const response = await axios.post('/attendance/checkin');
+    return response.data;
+  } catch (error) {
+    console.error('Error checking in:', error);
+    throw error;
+  }
+};
+
+export const checkOut = async () => {
+  try {
+    const response = await axios.post('/attendance/checkout');
+    return response.data;
+  } catch (error) {
+    console.error('Error checking out:', error);
+    throw error;
+  }
+};
+
+export const markAttendance = async (attendanceData) => {
+  try {
+    const response = await axios.post('/attendance', attendanceData);
+    return response.data;
+  } catch (error) {
+    console.error('Error marking attendance:', error);
+    throw error;
+  }
+};
+
+export const deleteAttendance = async (id) => {
+  try {
+    const response = await axios.delete(`/attendance/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting attendance:', error);
+    throw error;
+  }
+};
+
+// Object export for alternative import style
+export const attendanceAPI = {
+  getAll: getAttendance,
+  getTodayStatus,
+  checkIn,
+  checkOut,
+  markAttendance,
+  delete: deleteAttendance,
+};
+
+// Default export
+export default attendanceAPI;

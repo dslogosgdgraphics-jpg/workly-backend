@@ -575,8 +575,4 @@ const OrgChart = () => {
   );
 };
 
-<<<<<<< HEAD
 export default OrgChart;
-=======
-export default OrgChart;
->>>>>>> c29ef6ccc02fcc05af5ebfab1062810cf8e5eade
